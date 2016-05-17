@@ -557,7 +557,7 @@ def main():
                     # excludeFile = False
                     for excludePath in exclude:
                         if excludePath[-1] == '/': #exclude a folder
-                            excludeFile = excludePath in root
+                            excludeFile = excludePath in rel_path
                             
                         #FIXME: not handling other file patterns yet
                         
