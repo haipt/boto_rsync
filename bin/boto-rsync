@@ -547,15 +547,26 @@ def main():
                     key_name = cloud_path + get_key_name(fullpath, path)
                     file_size = os.path.getsize(fullpath)
                     
-                    # determine if the file should be excluded according to command line arguments.
+                    rel_path = fullpath[len(path):] #Relative path of this file
+                    
                     excludeFile = False
+                    
+                    
+                    
+                    # determine if the file should be excluded according to command line arguments.
+                    # excludeFile = False
                     for excludePath in exclude:
-                        if fullpath.startswith(excludePath):
-                            excludeFile = True
-                            continue
-                        elif fullpath[len(path):].lstrip(os.sep).startswith(excludePath):
-                            excludeFile = True
-                            continue
+                        if excludePath[-1] == '/': #exclude a folder
+                            excludeFile = excludePath in root
+                            
+                        #FIXME: not handling other file patterns yet
+                        
+                        # if fullpath.contains(excludePath):
+                        #     excludeFile = True
+                        #     continue
+                        # elif fullpath[len(path):].lstrip(os.sep).startswith(excludePath):
+                        #     excludeFile = True
+                        #     continue
                     if excludeFile:
                         sys.stdout.write(
                             'Skipping %s (excluded path)\n' %
